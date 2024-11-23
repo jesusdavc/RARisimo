@@ -1,5 +1,5 @@
 import RARisimo
-import FrecuenciaV2
+import Frecuencia
 import Hoffman
 import qualified Data.Map as Map
 
