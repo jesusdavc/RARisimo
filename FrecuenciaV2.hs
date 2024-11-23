@@ -1,5 +1,5 @@
 module FrecuenciaV2
-  ( Frecuencia,
+  ( Frecuencia(..),
     iniciarFrecuencia,
     contar,
     valor,
