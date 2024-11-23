@@ -6,7 +6,7 @@ import qualified Data.Map as Map
 
 main :: IO ()
 main = do
-    let str = "abracadabra"
+    let str = "abacab"
     
     -- Frecuencias de los caracteres
     let freqs = frecuencias str
@@ -16,10 +16,10 @@ main = do
     let g = ganadores freqs
     print g
 
-    -- Construcción del árbol de Huffman
+    -- Construcción del árbol de Hoffman
     let tree = hoffman str
     print tree
 
-    -- Codificación de Huffman
+    -- Codificación de Hoffman
     let cod = rarisimo str
     print cod

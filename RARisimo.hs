@@ -8,7 +8,8 @@ module RARisimo
 import Hoffman
 import FrecuenciaV2
 import qualified Data.Map as Map
-import Data.List (nub, sortOn)
+import Data.List (nub, sortOn, insertBy)
+import Data.Ord (comparing)
 
 frecuencias :: String -> [Frecuencia Hoffman]
 frecuencias str = map (\c -> Frecuencia (nuevoHoffman c) (count c str)) (nub str)
@@ -28,16 +29,26 @@ ganadores xs = Just (x, y, resto)
     resto = drop 2 sorted
 
 
+-- Función que construye el árbol de Huffman
 hoffman :: String -> Maybe Hoffman
 hoffman "" = Nothing
-hoffman str = Just $ construirHoffman (frecuencias str)
+hoffman str = Just $ construirHoffman (sortByFrecuencia (frecuencias str))
   where
+    -- Construcción del árbol de Huffman
     construirHoffman :: [Frecuencia Hoffman] -> Hoffman
-    construirHoffman [x] = valor x
+    construirHoffman [x] = valor x  -- Solo queda un árbol
     construirHoffman xs = construirHoffman (fusionarLosMenores xs)
 
+    -- Ordena la lista de frecuencias por la frecuencia de menor a mayor
+    sortByFrecuencia :: [Frecuencia Hoffman] -> [Frecuencia Hoffman]
+    sortByFrecuencia = sortOn frecuencia
+
+    -- Fusión de los árboles con menor frecuencia
     fusionarLosMenores :: [Frecuencia Hoffman] -> [Frecuencia Hoffman]
-    fusionarLosMenores (x:y:xs) = (Frecuencia (fusionHoffman (valor x) (valor y)) (frecuencia x + frecuencia y)) : xs
+    fusionarLosMenores (x:y:xs) = 
+        let nuevoArbol = fusionHoffman (valor y) (valor x)  -- Fusionamos los árboles
+            nuevaFrecuencia = Frecuencia nuevoArbol (frecuencia x + frecuencia y)
+        in insertBy (comparing frecuencia) nuevaFrecuencia xs  -- Insertamos en el lugar adecuado
     fusionarLosMenores _ = error "La lista no tiene suficientes elementos para fusionar."
 
 
