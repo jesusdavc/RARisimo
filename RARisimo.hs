@@ -6,7 +6,7 @@ module RARisimo
     ) where
 
 import Hoffman
-import FrecuenciaV2
+import Frecuencia
 import qualified Data.Map as Map
 import Data.List (nub, sortOn, insertBy)
 import Data.Ord (comparing)

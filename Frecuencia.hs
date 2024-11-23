@@ -1,4 +1,4 @@
-module FrecuenciaV2
+module Frecuencia
   ( Frecuencia(..),
     iniciarFrecuencia,
     contar,
