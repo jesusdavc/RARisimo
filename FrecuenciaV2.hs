@@ -1,4 +1,4 @@
-module FrecuenciaPlus 
+module FrecuenciaV2
   ( Frecuencia,
     iniciarFrecuencia,
     contar,
@@ -29,7 +29,6 @@ valor (Frecuencia v _) = v
 -- Función para obtener el contador de una Frecuencia
 frecuencia :: Frecuencia a -> Int
 frecuencia (Frecuencia _ f) = f
-
 
 
 -- Instancia de la clase Show

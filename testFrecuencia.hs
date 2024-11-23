@@ -1,4 +1,4 @@
-import FrecuenciaPlus
+import FrecuenciaV2
 
 main :: IO ()
 main = do
