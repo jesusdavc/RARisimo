@@ -3,14 +3,12 @@ import qualified Data.Map as Map
 
 -- Función para crear un árbol de Hoffman más grande
 crearArbol :: Hoffman
-crearArbol = 
-    fusionHoffman 
-    (fusionHoffman (nuevoHoffman 'a') (nuevoHoffman 'b')) 
-    (fusionHoffman (nuevoHoffman 'c') (fusionHoffman (nuevoHoffman 'd') (nuevoHoffman 'e')))
+crearArbol =  
+    fusionHoffman (nuevoHoffman 'a') (fusionHoffman (nuevoHoffman 'b') (nuevoHoffman 'c'))
 
 main :: IO ()
 main = do
- 
+  
   -- Crear un árbol grande
   let tree = crearArbol
 

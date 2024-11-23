@@ -1,31 +1,42 @@
--- Se especifican los elementos del modulo a exportar
-module Frecuencia (Frecuencia, iniciarFrecuencia, contar) where
+module Frecuencia
+  ( Frecuencia(..),
+    iniciarFrecuencia,
+    contar,
+    valor,
+    frecuencia
+  ) where
 
--- Al definir los constructores de esta forma, las funciones de acceso, valor y frecuencia,
--- quedan definidas implicitamente
-data Frecuencia a   = NuevaFrecuencia { valor :: a, frecuencia :: Int }
-                    | Conteo { valor :: a, frecuencia :: Int }
-                    deriving Eq
---Constructores
+-- Definición del tipo de datos Frecuencia
+-- Este tipo contiene un valor (de cualquier tipo comparable por igualdad)
+-- y un contador que almacena la cantidad de veces que aparece
+data Frecuencia a = Frecuencia a Int
+  deriving (Eq) -- La clase Eq permite verificar igualdad entre dos Frecuencias
+
+-- Constructores
+-- Función para iniciar una Frecuencia
+-- Crea una Frecuencia con un contador inicial de 1
 iniciarFrecuencia :: Eq a => a -> Frecuencia a
-iniciarFrecuencia x = NuevaFrecuencia x 1
+iniciarFrecuencia v = Frecuencia v 1
 
+-- Función para contar las ocurrencias de un valor en una lista
 contar :: Eq a => a -> [a] -> Frecuencia a
-contar x [] = Conteo x 0
-contar x y = Conteo x (contarAux 0 x y)
--- Funcion auxiliar para hacer recursion de cola
-contarAux :: Eq a => Int -> a -> [a] -> Int
-contarAux acc _ [] = acc
-contarAux acc x (y:ys) = contarAux (if x == y then acc + 1 else acc) x ys
+contar v xs = Frecuencia v (length (filter (== v) xs))
+
+-- Función para obtener el valor de una Frecuencia
+valor :: Frecuencia a -> a
+valor (Frecuencia v _) = v
+
+-- Función para obtener el contador de una Frecuencia
+frecuencia :: Frecuencia a -> Int
+frecuencia (Frecuencia _ f) = f
+
 
 -- Instancia de la clase Show
+-- Permite mostrar una Frecuencia como una cadena
 instance Show a => Show (Frecuencia a) where
-    show (NuevaFrecuencia v f) = "Valor: " ++ show v ++ ", Frecuencia: " ++ show f
-    show (Conteo v f) = "Valor: " ++ show v ++ ", Frecuencia: " ++ show f
+  show (Frecuencia v f) = "Frecuencia {valor = " ++ show v ++ ", contador = " ++ show f ++ "}"
 
--- Instancia de la clase Ord basada en el contador
+-- Instancia de la clase Ord
+-- Permite ordenar las Frecuencias según el contador (f)
 instance Eq a => Ord (Frecuencia a) where
-    compare (NuevaFrecuencia _ f1) (NuevaFrecuencia _ f2) = compare f1 f2
-    compare (NuevaFrecuencia _ f1) (Conteo _ f2) = compare f1 f2
-    compare (Conteo _ f1) (NuevaFrecuencia _ f2) = compare f1 f2
-    compare (Conteo _ f1) (Conteo _ f2) = compare f1 f2
+  (Frecuencia _ f1) <= (Frecuencia _ f2) = f1 <= f2
