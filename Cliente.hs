@@ -18,10 +18,14 @@ menu = do
     putStrLn "\nSeleccione una opción:"
     putStrLn "1. Codificar"
     putStrLn "2. Decodificar"
+    putStrLn "3. Analizar"
+    putStrLn "4. Salir"
     opcion <- getLine -- Leer la opción seleccionada por el usuario
     case opcion of
         "1" -> codificar    -- Llama a la función para codificar un archivo
         "2" -> decodificar  -- Llama a la función para decodificar un archivo
+        "3" -> analizar     -- LLama a la función para analizar un archivo a codificar
+        "4" -> putStrLn "Saliendo... Programa terminado."
         _   -> do
             putStrLn "Opción no válida. Intente nuevamente."
             menu -- Si la opción no es válida, se vuelve a mostrar el menú
