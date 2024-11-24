@@ -4,6 +4,7 @@ import Hoffman
 import qualified Data.Map as Map
 import System.IO
 import System.Directory
+import System.FilePath (replaceExtension)
 
 
 -- | Función principal que maneja la interacción con el usuario.
@@ -108,7 +109,7 @@ decodificar = do
                 then do
                     -- Leer contenido del archivo
                     content <- readFile inputPath
-
+                    
                     -- Separar la representación del árbol y la cadena binaria
                     let (treeStr, encodedContent) = parseContent content
 
@@ -117,9 +118,9 @@ decodificar = do
 
                     -- Decodificar la cadena binaria
                     let decodedContent = decodificarBinario decodeMap encodedContent
-
+                    
                     -- Guardar el archivo decodificado
-                    let outputPath = takeWhile (/= '.') inputPath  -- Quitar la extensión `.raro`
+                    let outputPath = replaceExtension inputPath "" -- Quitar la extensión `.raro`
                     writeFile outputPath (decodedContent ++ "\n") -- Añadir una línea vacía al final
                     putStrLn $ "Archivo decodificado guardado en: " ++ outputPath
                 else do
