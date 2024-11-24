@@ -40,7 +40,7 @@ codificar :: IO ()
 codificar = do
     putStrLn "Ingrese el path del archivo a codificar:"
     inputPath <- getLine
-    if inputPathvolver
+    if inputPath == "volver"
         then return () -- Volver al menú
         else do
             fileExists <- doesFileExist inputPath -- Verifica si el archivo existe
@@ -100,7 +100,7 @@ decodificar :: IO ()
 decodificar = do
     putStrLn "Ingrese el path del archivo a decodificar:"
     inputPath <- getLine
-    if inputPathvolver
+    if inputPath == "volver"
         then return () -- Volver al menú
         else do
             fileExists <- doesFileExist inputPath -- Verifica si el archivo existe
