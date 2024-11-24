@@ -50,11 +50,12 @@ El programa permite procesar archivos `.raro` de manera eficiente, verificando l
 La funcionalidad de análisis calcula:
 1. **Tamaño original**: Uso de `getFileSize` para obtener el tamaño en bytes.
 2. **Tamaño comprimido**: Basado en el conteo de bits generados por el árbol.
-3. **Ganancia porcentual**: Fórmula aplicada:  
+3. **Ganancia porcentual**: Fórmula aplicada:
+´´´math  
    \[
    \text{Ganancia (\%)} = \frac{\text{Tamaño original} - \text{Tamaño comprimido}}{\text{Tamaño original}} \times 100
    \]
-
+´´´
 ---
 
 ## **Ejemplo de Ejecución**
