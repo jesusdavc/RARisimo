@@ -4,32 +4,37 @@ import Hoffman
 import qualified Data.Map as Map
 import System.IO
 import System.Directory
+import Data.Maybe (fromMaybe)
 
--- Función principal que maneja la interacción con el usuario
+-- | Función principal que maneja la interacción con el usuario.
+-- El programa comienza mostrando un menú y permite al usuario seleccionar opciones.
 main :: IO ()
 main = do
-    putStrLn "RARísimo"
-    menu
+    putStrLn "RARísimo" -- Título del programa
+    menu                -- Muestra el menú principal
 
--- Función que muestra el menú de opciones
+-- | Función que muestra el menú de opciones y maneja la interacción con el usuario.
 menu :: IO ()
 menu = do
     putStrLn "\nSeleccione una opción:"
     putStrLn "1. Codificar"
-
-    opcion <- getLine
+    putStrLn "2. Decodificar"
+    opcion <- getLine -- Leer la opción seleccionada por el usuario
     case opcion of
-        "1" -> codificar
+        "1" -> codificar    -- Llama a la función para codificar un archivo
+        "2" -> decodificar  -- Llama a la función para decodificar un archivo
         _   -> do
             putStrLn "Opción no válida. Intente nuevamente."
-            menu
+            menu -- Si la opción no es válida, se vuelve a mostrar el menú
 
--- Función para codificar un archivo
+-- | Función para codificar un archivo.
+-- Lee un archivo, genera su representación en el árbol de Hoffman,
+-- codifica el contenido y guarda un archivo `.raro` con el árbol y el contenido codificado.
 codificar :: IO ()
 codificar = do
     putStrLn "Ingrese el path del archivo a codificar:"
     inputPath <- getLine
-    fileExists <- doesFileExist inputPath
+    fileExists <- doesFileExist inputPath -- Verifica si el archivo existe
     if fileExists
         then do
             -- Leer contenido del archivo
@@ -55,20 +60,84 @@ codificar = do
                     putStrLn $ "Archivo codificado guardado en: " ++ outputPath
         else do
             putStrLn "El archivo no existe. Intente nuevamente."
-            codificar
+            codificar -- Reintentar si el archivo no existe
 
--- Función para generar las codificaciones mientras se construye el árbol
+-- | Función que genera las codificaciones durante la construcción del árbol.
+-- Toma un árbol de Hoffman y produce un mapa de caracteres con sus codificaciones binarias.
+-- Recursion de cola.
 generarCodi :: Hoffman -> String -> Map.Map Char String -> Map.Map Char String
-generarCodi (Hoja c) code acc = Map.insert c code acc
+generarCodi (Hoja c) code acc = Map.insert c code acc -- Agrega el carácter con su codificación actual
 generarCodi (Rama izq der) code acc =
-    let accLeft = generarCodi izq (code ++ "0") acc
-        accRight = generarCodi der (code ++ "1") accLeft
+    let accLeft = generarCodi izq (code ++ "0") acc  -- Codificación "0" para el subárbol izquierdo
+        accRight = generarCodi der (code ++ "1") accLeft -- Codificación "1" para el subárbol derecho
     in accRight
 
--- Función para serializar el árbol de Hoffman con las codificaciones
+-- | Función que serializa el árbol de Hoffman con las codificaciones.
+-- Devuelve una representación en texto del árbol, incluyendo las codificaciones binarias.
 serializarArbolCodi :: Hoffman -> Map.Map Char String -> String
 serializarArbolCodi (Hoja c) codMap = "H(" ++ [c] ++ ", " ++ Map.findWithDefault "" c codMap ++ ")"
 serializarArbolCodi (Rama izq der) codMap =
     "R(" ++ serializarArbolCodi izq codMap ++ "," ++ serializarArbolCodi der codMap ++ ")"
 
+-- | Función para decodificar un archivo `.raro`.
+-- Lee el archivo codificado, reconstruye el árbol de Hoffman, decodifica el contenido
+-- y guarda el archivo decodificado en un nuevo archivo sin la extensión `.raro`.
+decodificar :: IO ()
+decodificar = do
+    putStrLn "Ingrese el path del archivo a decodificar:"
+    inputPath <- getLine
+    fileExists <- doesFileExist inputPath -- Verifica si el archivo existe
+    if fileExists
+        then do
+            -- Leer contenido del archivo
+            content <- readFile inputPath
 
+            -- Separar la representación del árbol y la cadena binaria
+            let (treeStr, encodedContent) = parseContent content
+
+            -- Crear un mapa inverso de codificación -> carácter
+            let decodeMap = construirMapaDecodificacion treeStr
+
+            -- Decodificar la cadena binaria
+            let decodedContent = decodificarBinario decodeMap encodedContent
+
+            -- Guardar el archivo decodificado
+            let outputPath = takeWhile (/= '.') inputPath  -- Quitar la extensión `.raro`
+            writeFile outputPath (decodedContent ++ "\n") -- Añadir una línea vacía al final
+            putStrLn $ "Archivo decodificado guardado en: " ++ outputPath
+        else do
+            putStrLn "El archivo no existe. Intente nuevamente."
+            decodificar -- Reintentar si el archivo no existe
+
+-- | Función que divide el contenido del archivo en dos partes:
+-- La representación del árbol y la cadena codificada.
+parseContent :: String -> (String, String)
+parseContent content =
+    let [treeStr, encodedContent] = lines content
+    in (treeStr, encodedContent)
+
+-- | Función que reconstruye el mapa de decodificación desde la representación del árbol.
+-- Toma el árbol serializado y produce un mapa con las codificaciones binarias como claves.
+construirMapaDecodificacion :: String -> Map.Map String Char
+construirMapaDecodificacion treeStr = Map.fromList $ parseHojas treeStr
+  where
+    -- Función auxiliar que extrae las hojas del árbol serializado
+    parseHojas :: String -> [(String, Char)]
+    parseHojas [] = []
+    parseHojas ('H':'(':c:',':' ':rest) =
+        let (code, restTail) = span (/= ')') rest -- Extrae el código binario
+        in (code, c) : parseHojas (drop 1 restTail) -- Continúa con el resto del árbol
+    parseHojas (_:rest) = parseHojas rest -- Ignorar otros caracteres
+
+-- | Función que decodifica una cadena binaria utilizando el mapa de decodificación.
+-- Devuelve la cadena original.
+-- Recursion de cola.
+decodificarBinario :: Map.Map String Char -> String -> String
+decodificarBinario decodeMap = go ""
+  where
+    go acc [] = [] -- Si la cadena binaria está vacía, terminamos
+    go acc (x:xs) =
+        let newAcc = acc ++ [x] -- Añadimos el siguiente bit a `acc`
+        in case Map.lookup newAcc decodeMap of
+               Just c  -> c : go "" xs  -- Si encontramos el carácter, lo añadimos al resultado
+               Nothing -> go newAcc xs  -- Seguimos acumulando bits si no encontramos el carácter
