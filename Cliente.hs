@@ -40,34 +40,38 @@ codificar :: IO ()
 codificar = do
     putStrLn "Ingrese el path del archivo a codificar:"
     inputPath <- getLine
-    fileExists <- doesFileExist inputPath -- Verifica si el archivo existe
-    if fileExists
-        then do
-            -- Leer contenido del archivo
-            content <- readFile inputPath
-            let cleanedContent = if last content == '\n' then init content else content  -- Eliminar salto de línea al final
-
-            -- Construir el árbol de Hoffman
-            let tree = hoffman cleanedContent
-            case tree of
-                Nothing -> putStrLn "No se pudo construir el árbol de Hoffman."
-                Just t -> do
-                    -- Generar el mapa de codificación
-                    let codMap = generarCodi t "" Map.empty
-
-                    -- Codificar el contenido
-                    let encodedContent = concatMap (\c -> Map.findWithDefault "" c codMap) content
-
-                    -- Serializar el árbol de Hoffman con las codificaciones
-                    let serializedTree = serializarArbolCodi t codMap
-
-                    -- Guardar el archivo codificado
-                    let outputPath = inputPath ++ ".raro"
-                    writeFile outputPath (serializedTree ++ "\n" ++ encodedContent ++ "\n")
-                    putStrLn $ "Archivo codificado guardado en: " ++ outputPath
+    if inputPathvolver
+        then return () -- Volver al menú
         else do
-            putStrLn "El archivo no existe. Intente nuevamente."
-            codificar -- Reintentar si el archivo no existe
+            fileExists <- doesFileExist inputPath -- Verifica si el archivo existe
+            if fileExists
+                then do
+                    -- Leer contenido del archivo
+                    content <- readFile inputPath
+                    let cleanedContent = if last content == '\n' then init content else content  -- Eliminar salto de línea al final
+
+                    -- Construir el árbol de Hoffman
+                    let tree = hoffman cleanedContent
+                    case tree of
+                        Nothing -> putStrLn "No se pudo construir el árbol de Hoffman."
+                        Just t -> do
+                            -- Generar el mapa de codificación
+                            let codMap = generarCodi t "" Map.empty
+
+                            -- Codificar el contenido
+                            let encodedContent = concatMap (\c -> Map.findWithDefault "" c codMap) content
+
+                            -- Serializar el árbol de Hoffman con las codificaciones
+                            let serializedTree = serializarArbolCodi t codMap
+
+                            -- Guardar el archivo codificado
+                            let outputPath = inputPath ++ ".raro"
+                            writeFile outputPath (serializedTree ++ "\n" ++ encodedContent ++ "\n")
+                            putStrLn $ "Archivo codificado guardado en: " ++ outputPath
+                else do
+                    putStrLn "El archivo no existe. Intente nuevamente."
+                    putStrLn "Escribir: volver, para regresar al menu principal."
+                    codificar -- Reintentar si el archivo no existe
 
 
 generarCodi :: Hoffman -> String -> Map.Map Char String -> Map.Map Char String
@@ -93,28 +97,32 @@ decodificar :: IO ()
 decodificar = do
     putStrLn "Ingrese el path del archivo a decodificar:"
     inputPath <- getLine
-    fileExists <- doesFileExist inputPath -- Verifica si el archivo existe
-    if fileExists
-        then do
-            -- Leer contenido del archivo
-            content <- readFile inputPath
-
-            -- Separar la representación del árbol y la cadena binaria
-            let (treeStr, encodedContent) = parseContent content
-
-            -- Crear un mapa inverso de codificación -> carácter
-            let decodeMap = construirMapaDecodificacion treeStr
-
-            -- Decodificar la cadena binaria
-            let decodedContent = decodificarBinario decodeMap encodedContent
-
-            -- Guardar el archivo decodificado
-            let outputPath = takeWhile (/= '.') inputPath  -- Quitar la extensión `.raro`
-            writeFile outputPath (decodedContent ++ "\n") -- Añadir una línea vacía al final
-            putStrLn $ "Archivo decodificado guardado en: " ++ outputPath
+    if inputPathvolver
+        then return () -- Volver al menú
         else do
-            putStrLn "El archivo no existe. Intente nuevamente."
-            decodificar -- Reintentar si el archivo no existe
+            fileExists <- doesFileExist inputPath -- Verifica si el archivo existe
+            if fileExists
+                then do
+                    -- Leer contenido del archivo
+                    content <- readFile inputPath
+
+                    -- Separar la representación del árbol y la cadena binaria
+                    let (treeStr, encodedContent) = parseContent content
+
+                    -- Crear un mapa inverso de codificación -> carácter
+                    let decodeMap = construirMapaDecodificacion treeStr
+
+                    -- Decodificar la cadena binaria
+                    let decodedContent = decodificarBinario decodeMap encodedContent
+
+                    -- Guardar el archivo decodificado
+                    let outputPath = takeWhile (/= '.') inputPath  -- Quitar la extensión `.raro`
+                    writeFile outputPath (decodedContent ++ "\n") -- Añadir una línea vacía al final
+                    putStrLn $ "Archivo decodificado guardado en: " ++ outputPath
+                else do
+                    putStrLn "El archivo no existe. Intente nuevamente."
+                    putStrLn "Escribir: volver, para regresar al menu principal."
+                    decodificar -- Reintentar si el archivo no existe
 
 
 -- | Función que divide el contenido del archivo en dos partes:
@@ -158,32 +166,36 @@ analizar :: IO ()
 analizar = do
     putStrLn "Ingrese el path del archivo a analizar:"
     inputPath <- getLine
-    fileExists <- doesFileExist inputPath
-    if fileExists
-        then do
-            -- Obtener tamaño del archivo en bytes
-            fileSize <- getFileSize inputPath
-            
-            -- Leer contenido del archivo
-            content <- readFile inputPath
-            
-            -- Construir el árbol de Hoffman
-            let tree = hoffman content
-            case tree of
-                Nothing -> putStrLn "No se pudo construir el árbol de Hoffman."
-                Just t -> do
-                    -- Calcular el tamaño codificado
-                    let codMap = generarCodi t "" Map.empty
-                    let encodedContent = concatMap (\c -> Map.findWithDefault "" c codMap) content
-                    let encodedSize = length encodedContent `div` 8 -- Tamaño aproximado en bytes
-                    
-                    -- Mostrar resultados
-                    putStrLn $ "Tamaño original: " ++ show fileSize ++ " bytes"
-                    putStrLn $ "Tamaño codificado: " ++ show encodedSize ++ " bytes"
-                    putStrLn $ "Ganancia: " ++ show (calcularGanancia fileSize encodedSize) ++ "%"
+    if inputPath == "volver"
+        then return () -- Volver al menú
         else do
-            putStrLn "El archivo no existe. Intente nuevamente."
-            analizar
+            fileExists <- doesFileExist inputPath
+            if fileExists
+                then do
+                    -- Obtener tamaño del archivo en bytes
+                    fileSize <- getFileSize inputPath
+                    
+                    -- Leer contenido del archivo
+                    content <- readFile inputPath
+                    
+                    -- Construir el árbol de Hoffman
+                    let tree = hoffman content
+                    case tree of
+                        Nothing -> putStrLn "No se pudo construir el árbol de Hoffman."
+                        Just t -> do
+                            -- Calcular el tamaño codificado
+                            let codMap = generarCodi t "" Map.empty
+                            let encodedContent = concatMap (\c -> Map.findWithDefault "" c codMap) content
+                            let encodedSize = length encodedContent `div` 8 -- Tamaño aproximado en bytes
+                            
+                            -- Mostrar resultados
+                            putStrLn $ "Tamaño original: " ++ show fileSize ++ " bytes"
+                            putStrLn $ "Tamaño codificado: " ++ show encodedSize ++ " bytes"
+                            putStrLn $ "Ganancia: " ++ show (calcularGanancia fileSize encodedSize) ++ "%"
+                else do
+                    putStrLn "El archivo no existe. Intente nuevamente."
+                    putStrLn "Escribir: volver, para regresar al menu principal."
+                    analizar
 
 
 -- Función para calcular el porcentaje de ganancia
