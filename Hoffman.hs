@@ -14,7 +14,7 @@ import qualified Data.Map as Map
 -- Un árbol de Hoffman puede ser una hoja o una rama.
 data Hoffman = Hoja Char       -- ^ Una hoja contiene un carácter.
              | Rama Hoffman Hoffman  -- ^ Una rama contiene dos subárboles (hijos izquierdo y derecho).
-             deriving (Show, Eq)
+             deriving (Eq)
 
 -- | Crea un nuevo árbol de Hoffman con un solo nodo hoja.
 -- Este nodo hoja contiene un carácter.
@@ -55,3 +55,24 @@ codificacion = codificacionAux ""
     codificacionAux pref (Hoja c) = Map.singleton c pref
     codificacionAux pref (Rama izq der) =
         Map.union (codificacionAux (pref ++ "0") izq) (codificacionAux (pref ++ "1") der)
+--Instancias Show y Read para Hoffman
+
+-- Instancia de Show para Hoffman
+instance Show Hoffman where
+    show (Hoja c)         = "Hoja " ++ show c
+    show (Rama izq der)   = "Rama (" ++ show izq ++ ") (" ++ show der ++ ")"
+
+-- Instancia de Read para Hoffman
+instance Read Hoffman where
+    readsPrec _ input = 
+        case stripPrefix "Hoja " input of
+            Just rest -> [(Hoja (read rest), "")]
+            Nothing -> case stripPrefix "Rama (" input of
+                Just rest -> 
+                    let (izq, rest1) = head (reads rest)
+                        (der, rest2) = head (reads (tail rest1)) -- tail para saltar el espacio y paréntesis de cierre
+                    in [(Rama izq der, rest2)]
+                Nothing -> []
+
+stripPrefix :: String -> String -> Maybe String
+stripPrefix = stripPrefix
