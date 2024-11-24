@@ -42,9 +42,10 @@ codificar = do
         then do
             -- Leer contenido del archivo
             content <- readFile inputPath
+            let cleanedContent = if last content == '\n' then init content else content  -- Eliminar salto de línea al final
 
             -- Construir el árbol de Hoffman
-            let tree = hoffman content
+            let tree = hoffman cleanedContent
             case tree of
                 Nothing -> putStrLn "No se pudo construir el árbol de Hoffman."
                 Just t -> do
