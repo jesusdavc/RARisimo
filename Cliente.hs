@@ -74,6 +74,9 @@ codificar = do
                     codificar -- Reintentar si el archivo no existe
 
 
+-- | Función que genera las codificaciones durante la construcción del árbol.
+-- Toma un árbol de Hoffman y produce un mapa de caracteres con sus codificaciones binarias.
+-- Recursion de cola.
 generarCodi :: Hoffman -> String -> Map.Map Char String -> Map.Map Char String
 generarCodi (Hoja c) code acc = Map.insert c code acc -- Agrega el carácter con su codificación actual
 generarCodi (Rama izq der) code acc =
@@ -203,6 +206,3 @@ calcularGanancia :: Integer -> Int -> Double
 calcularGanancia original codificado =
     let ganancia = fromIntegral (original - toInteger codificado) / fromIntegral original * 100
     in ganancia
--- | Función que genera las codificaciones durante la construcción del árbol.
--- Toma un árbol de Hoffman y produce un mapa de caracteres con sus codificaciones binarias.
--- Recursion de cola.
