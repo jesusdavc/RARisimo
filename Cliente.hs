@@ -24,7 +24,7 @@ menu = do
     case opcion of
         "1" -> codificar    -- Llama a la función para codificar un archivo
         "2" -> decodificar  -- Llama a la función para decodificar un archivo
-        -- "3" -> analizar     -- LLama a la función para analizar un archivo al codificar
+        "3" -> analizar     -- LLama a la función para analizar un archivo al codificar
         "4" -> putStrLn "Saliendo... Programa terminado."
         _   -> do
             putStrLn "Opción no válida. Intente nuevamente."
