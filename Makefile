@@ -1,13 +1,13 @@
 # Makefile para compilar el proyecto en Haskell
 
 # Definir el nombre del ejecutable
-EXEC = main
+EXEC = rarisimo
 
 # Definir los archivos de fuente
 SOURCES = Frecuencia.hs Hoffman.hs RARisimo.hs Cliente.hs
 
 # Definir las opciones de compilación
-GHC_FLAGS = -package containers -package directory
+GHC_FLAGS = -package containers -package directory -package filepath
 
 # Regla por defecto: compilar el ejecutable
 all: $(EXEC)
