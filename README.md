@@ -10,7 +10,6 @@
 ## **Descripción del Proyecto**
 
 El proyecto "RARísimo" consiste en desarrollar un sistema de compresión y descompresión de archivos utilizando algoritmos basados en árboles de Hoffman implementados en Haskell. Este sistema tiene como objetivo operar en un entorno limitado, mostrando el funcionamiento básico y emulando este sistema de compresión/descompresión.
----
 
 ## **Estructura**
 
