@@ -4,7 +4,6 @@ import Hoffman
 import qualified Data.Map as Map
 import System.IO
 import System.Directory
-import Data.Maybe (fromMaybe)
 
 -- | Función principal que maneja la interacción con el usuario.
 -- El programa comienza mostrando un menú y permite al usuario seleccionar opciones.
