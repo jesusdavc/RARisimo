@@ -52,9 +52,9 @@ La funcionalidad de análisis calcula:
 2. **Tamaño comprimido**: Basado en el conteo de bits generados por el árbol.
 3. **Ganancia porcentual**: Fórmula aplicada:
 ´´´math  
-   \[
-   \text{Ganancia (\%)} = \frac{\text{Tamaño original} - \text{Tamaño comprimido}}{\text{Tamaño original}} \times 100
-   \]
+   
+   Ganancia = \frac{{Tamaño original} - {Tamaño comprimido}}{\text{Tamaño original}} \times 100
+   
 ´´´
 ---
 
