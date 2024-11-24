@@ -24,7 +24,7 @@ menu = do
     case opcion of
         "1" -> codificar    -- Llama a la función para codificar un archivo
         "2" -> decodificar  -- Llama a la función para decodificar un archivo
-        -- "3" -> analizar     -- LLama a la función para analizar un archivo al codificar
+        "3" -> analizar     -- LLama a la función para analizar un archivo al codificar
         "4" -> putStrLn "Saliendo... Programa terminado."
         _   -> do
             putStrLn "Opción no válida. Intente nuevamente."
@@ -64,7 +64,43 @@ codificar = do
         else do
             putStrLn "El archivo no existe. Intente nuevamente."
             codificar -- Reintentar si el archivo no existe
+-- Función para analizar un código. 
+analizar :: IO ()
+analizar = do
+    putStrLn "Ingrese el path del archivo a analizar:"
+    inputPath <- getLine
+    fileExists <- doesFileExist inputPath
+    if fileExists
+        then do
+            -- Obtener tamaño del archivo en bytes
+            fileSize <- getFileSize inputPath
+            
+            -- Leer contenido del archivo
+            content <- readFile inputPath
+            
+            -- Construir el árbol de Hoffman
+            let tree = hoffman content
+            case tree of
+                Nothing -> putStrLn "No se pudo construir el árbol de Hoffman."
+                Just t -> do
+                    -- Calcular el tamaño codificado
+                    let codMap = generarCodi t "" Map.empty
+                    let encodedContent = concatMap (\c -> Map.findWithDefault "" c codMap) content
+                    let encodedSize = length encodedContent `div` 8 -- Tamaño aproximado en bytes
+                    
+                    -- Mostrar resultados
+                    putStrLn $ "Tamaño original: " ++ show fileSize ++ " bytes"
+                    putStrLn $ "Tamaño codificado: " ++ show encodedSize ++ " bytes"
+                    putStrLn $ "Ganancia: " ++ show (calcularGanancia fileSize encodedSize) ++ "%"
+        else do
+            putStrLn "El archivo no existe. Intente nuevamente."
+            analizar
 
+-- Función para calcular el porcentaje de ganancia
+calcularGanancia :: Integer -> Int -> Double
+calcularGanancia original codificado =
+    let ganancia = fromIntegral (original - toInteger codificado) / fromIntegral original * 100
+    in ganancia
 -- | Función que genera las codificaciones durante la construcción del árbol.
 -- Toma un árbol de Hoffman y produce un mapa de caracteres con sus codificaciones binarias.
 -- Recursion de cola.
