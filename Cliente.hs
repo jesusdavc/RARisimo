@@ -125,7 +125,7 @@ decodificar = do
                     writeFile outputPath (decodedContent ++ "\n") -- Añadir una línea vacía al final
                     putStrLn $ "Archivo decodificado guardado en: " ++ outputPath
                 else do
-                    putStrLn "El archivo no existe. Intente nuevamente."
+                    putStrLn "El archivo no existe o no es extensión .raro. Intente nuevamente."
                     putStrLn "Escribir: volver, para regresar al menu principal."
                     decodificar -- Reintentar si el archivo no existe
 
