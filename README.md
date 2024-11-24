@@ -1,10 +1,14 @@
 # RARisimo
+---
 # Proyecto I: RARísimo
 ### Universidad Simón Bolívar  
 **Departamento de Computación y Tecnología de la Información**  
 **Curso**: CI-3661 – Laboratorio de Lenguajes de Programación  
 **Trimestre**: Septiembre–Diciembre 2024  
-
+**Estudiantes**
+Sergio Carrillo - Carnet: 14-11315
+Jesús  Cuéllar  - Carnet: 15-10345
+Néstor Herrera  - Carnet: 18-10796
 ---
 
 ## **Descripción del Proyecto**
@@ -22,16 +26,16 @@ El proyecto "RARísimo" consiste en desarrollar un sistema de compresión y desc
    - Instancias de las clases `Show` y `Ord` para manejar comparaciones y representaciones.
 
 2. **`Hoffman.hs`**  
-   Contiene la implementación del tipo de datos `Hoffman` (árbol de Huffman) y las funciones asociadas:
+   Contiene la implementación del tipo de datos `Hoffman` (árbol de Hoffman) y las funciones asociadas:
    - Construcción: `nuevoHoffman` y `fusionHoffman`.
    - Acceso: `obtenerCaracter`, `arbolIzquierdo` y `arbolDerecho`.
    - Transformación: `codificacion`, para generar códigos binarios a partir del árbol.
 
 3. **`RARisimo.hs`**  
-   Implementa el algoritmo de construcción del árbol de Huffman basado en frecuencias, incluyendo:
+   Implementa el algoritmo de construcción del árbol de Hoffman basado en frecuencias, incluyendo:
    - `frecuencias`: Genera las frecuencias a partir de una cadena.
    - `ganadores`: Encuentra las dos frecuencias más pequeñas.
-   - `hoffman`: Construye el árbol de Huffman.
+   - `hoffman`: Construye el árbol de Hoffman.
    - `rarisimo`: Genera la codificación asociada a cada carácter.
 
 4. **`Cliente.hs`**  
@@ -53,7 +57,7 @@ La funcionalidad de análisis calcula:
 3. **Ganancia porcentual**: Fórmula aplicada:
  
    
-   $ Ganancia = \frac{{Tamaño original} - {Tamaño comprimido}}{\text{Tamaño original}} \times 100 $
+    Ganancia = (Tamaño original - Tamaño comprimido) / Tamaño original x 100 
    
 
 ---
