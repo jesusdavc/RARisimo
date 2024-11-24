@@ -1,5 +1,7 @@
 dist
 dist-*
+main
+*.raro
 cabal-dev
 *.o
 *.hi
