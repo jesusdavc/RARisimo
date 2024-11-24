@@ -1,6 +1,7 @@
 dist
 dist-*
 main
+rarisimo
 *.raro
 cabal-dev
 *.o
