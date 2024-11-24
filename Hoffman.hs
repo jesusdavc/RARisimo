@@ -9,6 +9,7 @@ module Hoffman
     ) where
 
 import qualified Data.Map as Map
+import Data.List (stripPrefix)
 
 -- | Tipo de datos para representar un árbol de Hoffman.
 -- Un árbol de Hoffman puede ser una hoja o una rama.
@@ -64,15 +65,24 @@ instance Show Hoffman where
 
 -- Instancia de Read para Hoffman
 instance Read Hoffman where
-    readsPrec _ input = 
+    readsPrec _ input =
         case stripPrefix "Hoja " input of
-            Just rest -> [(Hoja (read rest), "")]
+            Just rest -> 
+                case reads rest of
+                    [(c, rest')] -> [(Hoja c, rest')]  -- Leer el carácter de la hoja
+                    _ -> []  -- Fallo al leer la hoja
             Nothing -> case stripPrefix "Rama (" input of
                 Just rest -> 
-                    let (izq, rest1) = head (reads rest)
-                        (der, rest2) = head (reads (tail rest1)) -- tail para saltar el espacio y paréntesis de cierre
-                    in [(Rama izq der, rest2)]
-                Nothing -> []
-
-stripPrefix :: String -> String -> Maybe String
-stripPrefix = stripPrefix
+                    case reads rest of
+                        [(izq, rest1)] ->
+                            case stripPrefix ") (" rest1 of
+                                Just rest2 ->
+                                    case reads rest2 of
+                                        [(der, rest3)] ->
+                                            case stripPrefix ")" rest3 of
+                                                Just rest4 -> [(Rama izq der, rest4)]  -- Rama correctamente leída
+                                                Nothing -> []  -- Falta el paréntesis de cierre
+                                        _ -> []  -- Fallo al leer el subárbol derecho
+                                Nothing -> []  -- Falta el separador ") ("
+                        _ -> []  -- Fallo al leer el subárbol izquierdo
+                Nothing -> []  -- No coincide con "Hoja " ni "Rama ("
