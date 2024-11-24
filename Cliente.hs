@@ -16,10 +16,12 @@ menu :: IO ()
 menu = do
     putStrLn "\nSeleccione una opción:"
     putStrLn "1. Codificar"
+    putStrLn "3. Analizar"
 
     opcion <- getLine
     case opcion of
         "1" -> codificar
+        "3" -> analizar 
         _   -> do
             putStrLn "Opción no válida. Intente nuevamente."
             menu
@@ -56,7 +58,43 @@ codificar = do
         else do
             putStrLn "El archivo no existe. Intente nuevamente."
             codificar
+-- Función para analizar un código. 
+analizar :: IO ()
+analizar = do
+    putStrLn "Ingrese el path del archivo a analizar:"
+    inputPath <- getLine
+    fileExists <- doesFileExist inputPath
+    if fileExists
+        then do
+            -- Obtener tamaño del archivo en bytes
+            fileSize <- getFileSize inputPath
+            
+            -- Leer contenido del archivo
+            content <- readFile inputPath
+            
+            -- Construir el árbol de Hoffman
+            let tree = hoffman content
+            case tree of
+                Nothing -> putStrLn "No se pudo construir el árbol de Hoffman."
+                Just t -> do
+                    -- Calcular el tamaño codificado
+                    let codMap = generarCodi t "" Map.empty
+                    let encodedContent = concatMap (\c -> Map.findWithDefault "" c codMap) content
+                    let encodedSize = length encodedContent `div` 8 -- Tamaño aproximado en bytes
+                    
+                    -- Mostrar resultados
+                    putStrLn $ "Tamaño original: " ++ show fileSize ++ " bytes"
+                    putStrLn $ "Tamaño codificado: " ++ show encodedSize ++ " bytes"
+                    putStrLn $ "Ganancia: " ++ show (calcularGanancia fileSize encodedSize) ++ "%"
+        else do
+            putStrLn "El archivo no existe. Intente nuevamente."
+            analizar
 
+-- Función para calcular el porcentaje de ganancia
+calcularGanancia :: Integer -> Int -> Double
+calcularGanancia original codificado =
+    let ganancia = fromIntegral (original - toInteger codificado) / fromIntegral original * 100
+    in ganancia
 -- Función para generar las codificaciones mientras se construye el árbol
 generarCodi :: Hoffman -> String -> Map.Map Char String -> Map.Map Char String
 generarCodi (Hoja c) code acc = Map.insert c code acc
