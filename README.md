@@ -5,6 +5,7 @@
 **Departamento de Computación y Tecnología de la Información**  
 **Curso**: CI-3661 – Laboratorio de Lenguajes de Programación  
 **Trimestre**: Septiembre–Diciembre 2024  
+---
 **Estudiantes**
 Sergio Carrillo - Carnet: 14-11315
 Jesús  Cuéllar  - Carnet: 15-10345

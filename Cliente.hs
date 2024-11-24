@@ -5,6 +5,7 @@ import qualified Data.Map as Map
 import System.IO
 import System.Directory
 import System.FilePath (replaceExtension)
+import System.FilePath (takeExtension)
 
 
 -- | Función principal que maneja la interacción con el usuario.
@@ -105,7 +106,7 @@ decodificar = do
         then return () -- Volver al menú
         else do
             fileExists <- doesFileExist inputPath -- Verifica si el archivo existe
-            if fileExists
+            if fileExists && takeExtension inputPath == ".raro"
                 then do
                     -- Leer contenido del archivo
                     content <- readFile inputPath
