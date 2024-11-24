@@ -1,5 +1,5 @@
 module Hoffman
-    ( Hoffman
+    ( Hoffman(..) -- Exportar los constructores
     , nuevoHoffman
     , fusionHoffman
     , obtenerCaracter
