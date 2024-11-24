@@ -18,7 +18,7 @@ menu = do
     putStrLn "\nSeleccione una opción:"
     putStrLn "1. Codificar"
     putStrLn "2. Decodificar"
-    -- putStrLn "3. Analizar"
+    putStrLn "3. Analizar"
     putStrLn "4. Salir"
     opcion <- getLine -- Leer la opción seleccionada por el usuario
     case opcion of
