@@ -66,11 +66,11 @@ La funcionalidad de análisis calcula:
 1. **Tamaño original**: Uso de `getFileSize` para obtener el tamaño en bytes.
 2. **Tamaño comprimido**: Basado en el conteo de bits generados por el árbol.
 3. **Ganancia porcentual**: Fórmula aplicada en la función auxiliar `calcularGanancia`:
- 
-    Ganancia = ((Tamaño original - Tamaño comprimido) / Tamaño original) x 100 
+   > **Ganancia = ((Tamaño original - Tamaño comprimido) / Tamaño original) x 100**
+
 ## Sobre el tipo de formato de entrada
 Se escogio texto plano por su practicidad en la lectura y escritura. Por ello se asume que al probar esta implementación se pase un archivo de texto plano de una sola línea.
-Por lo que si el programa recibe un archivo que no es texto plano y tenga más de una línea no funcionará. Si bien hubiese sido interesante extenderse con archivos complejos, el objetivo de implementación se cumple y se evidencia de manera clara y breve. En el ejemplo de ejecución se verá con mayor claridad. 
+Por lo que si el programa recibe un archivo que no es texto plano o tenga más de una línea no funcionará. Si bien hubiese sido interesante extenderse con archivos complejos, el objetivo de implementación se cumple y se evidencia de manera clara y breve. En el ejemplo de ejecución se verá con mayor claridad. 
 
 ## **Ejemplo de Ejecución**
 
@@ -87,16 +87,14 @@ Digamos que tenemos en el repositorio raíz un archivo `ejemplo` (sin extension)
    5. Al seleccionar 4, se termina el programa.
 
 ### Imágenes de referencia:
+![Captura de pantalla 2024-11-24 204747](https://github.com/user-attachments/assets/1e436ef8-be0a-4e43-8106-af93532ca090)
+
 ![Captura de pantalla 2024-11-24 204937](https://github.com/user-attachments/assets/73949b04-624a-49a0-a068-8b801cfc4dfe)
 
 ![image](https://github.com/user-attachments/assets/7c3bb1df-d851-4e0f-87e1-ab223eb2d39d)
 
-![image](![Captura de pantalla 2024-11-24 204747](https://github.com/user-attachments/assets/1e436ef8-be0a-4e43-8106-af93532ca090)
-https://github.com/user-attachments/assets/8327575a-9cdb-4387-bd25-eb28a02084d1)
-
 ![image](https://github.com/user-attachments/assets/d5446c8b-d30f-417c-90df-aeebad31e7e3)
 
 ![image](https://github.com/user-attachments/assets/c42d459f-6612-486b-b2f6-993f283cc468)
-
 
 ![Captura de pantalla 2024-11-24 204747](https://github.com/user-attachments/assets/dfb05d8d-f085-4e2e-ada8-13a5a88b36ba)
