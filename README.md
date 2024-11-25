@@ -70,7 +70,7 @@ La funcionalidad de análisis calcula:
     Ganancia = ((Tamaño original - Tamaño comprimido) / Tamaño original) x 100 
 ## Sobre el tipo de formato de entrada
 Se escogio texto plano por su practicidad en la lectura y escritura. Por ello se asume que al probar esta implementación se pase un archivo de texto plano de una sola línea.
-Por lo que si el programa recibe un archivo que no es texto plano y tenga más de una línea no funcionará. Si bien hubiese sido interesante extenderse con archivos complejos, el objetivo de implementación se cumple y se evidencia de manera clara y breve. En el ejemplo de ejecucíon se verá con mayor claridad. 
+Por lo que si el programa recibe un archivo que no es texto plano y tenga más de una línea no funcionará. Si bien hubiese sido interesante extenderse con archivos complejos, el objetivo de implementación se cumple y se evidencia de manera clara y breve. En el ejemplo de ejecución se verá con mayor claridad. 
 
 ## **Ejemplo de Ejecución**
 
