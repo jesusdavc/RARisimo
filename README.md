@@ -58,6 +58,11 @@ Para cumplir el requerimiento de que el programa pueda ser ejecutado con el coma
 En la carpeta `pruebas` se incluyen pruebas especificas para los diferentes modulos, similar a el programa principal, cada prueba tiene su Makefile para facilitar el proceso de ejecucion y obtencion de resultados.
 
 ### Implementación de Cliente.hs
+
+#### **Codificación**
+La codificación sigue el siguiente formato `H(a, 0)` donde H es Hoja y tienen el caracter con la codificación correspondiente y R indica la Rama o Ramas correspondientes a cómo va el árbol. 
+`abacab` es la cadena de ejemplo en el PDF este se codifica a `R(H(a, 0),R(H(b, 10),H(c, 11)))` la R exterior es el nivel más alto del arbol y luego van las hojas y otras sub ramas R. 
+
 #### **Decodificación**
 El programa permite procesar archivos `.raro` de manera eficiente, verificando la existencia del archivo y su validez antes de decodificarlo.  
 
