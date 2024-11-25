@@ -47,8 +47,6 @@ El proyecto "RARísimo" consiste en desarrollar un sistema de compresión y desc
    - **Analizar**: Muestra el tamaño original, el tamaño comprimido y el porcentaje de ganancia.
    - **Salir**: Termina la ejecución del programa.
 
-   Con respecto al formato de archivos, se escogio el uso de archivos de formato `.txt` mayormente por la facilidad de manejo al ser archivos de texto plano, lo cual es suficiente para probar la funcionalidad del programa en la compresion de datos en diferentes archivo, el programa tambien funciona con archivos sin extensión.
-
 ## Detalles de Implementacion
 
 ### Comandos antes de iniciar ejecucion
@@ -70,6 +68,9 @@ La funcionalidad de análisis calcula:
 3. **Ganancia porcentual**: Fórmula aplicada en la función auxiliar `calcularGanancia`:
  
     Ganancia = ((Tamaño original - Tamaño comprimido) / Tamaño original) x 100 
+## Sobre el tipo de formato de entrada
+Se escogio texto plano por su practicidad en la lectura y escritura. Por ello se asume que al probar esta implementación se pase un archivo de texto plano de una sola línea.
+Por lo que si el programa recibe un archivo que no es texto plano y tenga más de una línea no funcionará. Si bien hubiese sido interesante extenderse con archivos complejos, el objetivo de implementación se cumple y se evidencia de manera clara y breve. En el ejemplo de ejecucíon se verá con mayor claridad. 
 
 ## **Ejemplo de Ejecución**
 
