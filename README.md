@@ -87,11 +87,16 @@ Digamos que tenemos en el repositorio raíz un archivo `ejemplo` (sin extension)
    5. Al seleccionar 4, se termina el programa.
 
 ### Imágenes de referencia:
+![Captura de pantalla 2024-11-24 204937](https://github.com/user-attachments/assets/73949b04-624a-49a0-a068-8b801cfc4dfe)
+
 ![image](https://github.com/user-attachments/assets/7c3bb1df-d851-4e0f-87e1-ab223eb2d39d)
 
-![image](https://github.com/user-attachments/assets/8327575a-9cdb-4387-bd25-eb28a02084d1)
+![image](![Captura de pantalla 2024-11-24 204747](https://github.com/user-attachments/assets/1e436ef8-be0a-4e43-8106-af93532ca090)
+https://github.com/user-attachments/assets/8327575a-9cdb-4387-bd25-eb28a02084d1)
 
 ![image](https://github.com/user-attachments/assets/d5446c8b-d30f-417c-90df-aeebad31e7e3)
 
 ![image](https://github.com/user-attachments/assets/c42d459f-6612-486b-b2f6-993f283cc468)
 
+
+![Captura de pantalla 2024-11-24 204747](https://github.com/user-attachments/assets/dfb05d8d-f085-4e2e-ada8-13a5a88b36ba)
