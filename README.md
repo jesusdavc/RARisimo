@@ -93,8 +93,8 @@ Digamos que tenemos en el repositorio raíz un archivo `ejemplo` (sin extension)
 
 ![image](https://github.com/user-attachments/assets/7c3bb1df-d851-4e0f-87e1-ab223eb2d39d)
 
+![image](https://github.com/user-attachments/assets/9d5fc428-1585-4ef2-a087-a632bebfc25c)
+
 ![image](https://github.com/user-attachments/assets/d5446c8b-d30f-417c-90df-aeebad31e7e3)
 
 ![image](https://github.com/user-attachments/assets/c42d459f-6612-486b-b2f6-993f283cc468)
-
-![Captura de pantalla 2024-11-24 204747](https://github.com/user-attachments/assets/dfb05d8d-f085-4e2e-ada8-13a5a88b36ba)
