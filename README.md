@@ -53,7 +53,7 @@ El proyecto "RARísimo" consiste en desarrollar un sistema de compresión y desc
 
 ### Comandos antes de iniciar ejecucion
 
-Para cumplir el requerimiento de que el programa pueda ser ejecutado con el comando `./rarisimo`, se agregó un archivo `Makefile`, el cual contiene en la variable `SOURCES` los modulos a importar, y en `GHC_FLAGS` el uso de flags para incluir los paquetes `containers`, `directory`, y `filepath` y esto se utiliza para el manejo de archivos en `Cliente.hs`. Por lo tanto, antes de ejecutar el programa, debe ejecutarse `make rarisimo`. Luego de compilar va a ejecutar `./rarisimo`.
+Para cumplir el requerimiento de que el programa pueda ser ejecutado con el comando `./rarisimo`, se agregó un archivo `Makefile`, el cual contiene en la variable `SOURCES` los modulos a importar, y en `GHC_FLAGS` el uso de flags para incluir los paquetes `containers`, `directory`, y `filepath` y esto se utiliza para el manejo de archivos en `Cliente.hs`. Por lo tanto, antes de ejecutar el programa, debe ejecutarse `make run`. Luego de compilar va a ejecutar `./rarisimo`.
 
 ### Pruebas de los modulos
 
