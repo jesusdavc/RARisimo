@@ -68,7 +68,7 @@ La codificación sigue el siguiente formato para él árbol de Hoffman `H("a",'0
 `abacab` es la cadena de ejemplo en el PDF este se genera la representación del árbol de Hoffman `R(H("a",'0'),R(H("b",'10'),H("c",'11')))` donde la R exterior es el nivel más alto del arbol y luego van las hojas y otras sub ramas R. Además también almacena la cadena de bits para representar la cadena codificada que en este caso es `010011010`. Se eligió representar el árbol de Hoffman con la información de la hoja (carácter, codificación) para facilitar luego la decodificación a la cadena original al conocer los valores de las hojas. Esta información se almacena en un archivo `.raro`.
 
 #### **Decodificación**
-El programa permite procesar archivos `.raro` de manera eficiente, verificando la existencia del archivo y su validez al comprobar su extensión `.raro` antes de decodificarlo. Almacena la cadena de caracteres primitiva en un archivo de texto plano. Y esta se almacen un archivo de texto plano sin extensión.
+El programa permite procesar archivos `.raro` de manera eficiente, verificando la existencia del archivo y su validez al comprobar su extensión `.raro` antes de decodificarlo. Almacena la cadena de caracteres primitiva en un archivo de texto plano. Y esta se almacena un archivo de texto plano sin extensión.
 
 #### **Análisis**
 La funcionalidad de análisis calcula:
