@@ -64,7 +64,7 @@ En la carpeta `pruebas` se incluyen pruebas especificas para los diferentes modu
 Se asume que para los archivos de lectura de codificar, la cadena a codificar está almacenada en un archivo de texto plano. Lo que infiere que la cadena está escrita en una única linea del archivo por más extensa que sea esta.
 
 #### **Codificación**
-La codificación sigue el siguiente formato para él árbol de Hoffman `H("a", '0')` donde H es Hoja y tienen el caracter con la codificación correspondiente y R indica la Rama o Ramas correspondientes a cómo se estructura el árbol. 
+La codificación sigue el siguiente formato para él árbol de Hoffman `H("a",'0')` donde H es Hoja y tienen el caracter con la codificación correspondiente y R indica la Rama o Ramas correspondientes a cómo se estructura el árbol. 
 `abacab` es la cadena de ejemplo en el PDF este se genera la representación del árbol de Hoffman `R(H("a",'0'),R(H("b",'10'),H("c",'11')))` donde la R exterior es el nivel más alto del arbol y luego van las hojas y otras sub ramas R. Además también almacena la cadena de bits para representar la cadena codificada que en este caso es `010011010`. Se eligió representar el árbol con la información de la hoja (caracter, codificación) ya que facilita la decoficicación a la cadena original al conocer estos valores.
 
 #### **Decodificación**
