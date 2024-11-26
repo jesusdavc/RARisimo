@@ -40,18 +40,20 @@ El proyecto "RARísimo" consiste en desarrollar un sistema de compresión y desc
    - `rarisimo`: Genera la codificación asociada a cada carácter.
 
 4. **`Cliente.hs`**  
-   Implementa la interfaz de usuario y el flujo principal del programa (`main`).  
+   Implementa la interfaz de usuario y el flujo principal del programa (`main`).
    Incluye las siguientes funcionalidades:
-   - **Codificar**: Convierte un archivo en uno comprimido con extensión `.raro`. Puede leer rutas relativas y absolutas.
-   - **Decodificar**: Restaura un archivo `.raro` a su estado original. Puede leer rutas relativas y absolutas.
+   - **Codificar**: Convierte un archivo en uno comprimido con extensión `.raro`.
+   - **Decodificar**: Restaura un archivo `.raro` a su estado original.
    - **Analizar**: Muestra el tamaño original, el tamaño comprimido y el porcentaje de ganancia.
    - **Salir**: Termina la ejecución del programa.
+
+   **Nota**: `Codificar`, `Decodificar` y `Analizar` soportan la lectura de archivos con rutas relativas y absolutas.  
 
 ## Detalles de Implementacion
 
 ### Comandos antes de iniciar ejecucion
 
-Para cumplir el requerimiento de que el programa pueda ser ejecutado con el comando `./rarisimo`, se agregó un archivo `Makefile`, el cual contiene en la variable `SOURCES` los modulos a importar, y en `GHC_FLAGS` el uso de flags para incluir los paquetes `containers`, `directory`, y `filepath` y esto se utiliza para el manejo de archivos en `Cliente.hs`. Por lo tanto, antes de ejecutar el programa, debe ejecutarse `make rarisimo`
+Para cumplir el requerimiento de que el programa pueda ser ejecutado con el comando `./rarisimo`, se agregó un archivo `Makefile`, el cual contiene en la variable `SOURCES` los modulos a importar, y en `GHC_FLAGS` el uso de flags para incluir los paquetes `containers`, `directory`, y `filepath` y esto se utiliza para el manejo de archivos en `Cliente.hs`. Por lo tanto, antes de ejecutar el programa, debe ejecutarse `make rarisimo`. Luego de compilar va a ejecutar `./rarisimo`.
 
 ### Pruebas de los modulos
 
@@ -59,12 +61,14 @@ En la carpeta `pruebas` se incluyen pruebas especificas para los diferentes modu
 
 ### Implementación de Cliente.hs
 
+Se asume que para los archivos de lectura de codificar, la cadena a codificar está almacenada en un archivo de texto plano. Lo que infiere que la cadena está escrita en una única linea del archivo por más extensa que sea esta.
+
 #### **Codificación**
-La codificación sigue el siguiente formato `H(a, 0)` donde H es Hoja y tienen el caracter con la codificación correspondiente y R indica la Rama o Ramas correspondientes a cómo va el árbol. 
-`abacab` es la cadena de ejemplo en el PDF este se codifica a `R(H(a, 0),R(H(b, 10),H(c, 11)))` la R exterior es el nivel más alto del arbol y luego van las hojas y otras sub ramas R. 
+La codificación sigue el siguiente formato para él árbol de Hoffman `H("a", '0')` donde H es Hoja y tienen el caracter con la codificación correspondiente y R indica la Rama o Ramas correspondientes a cómo se estructura el árbol. 
+`abacab` es la cadena de ejemplo en el PDF este se genera la representación del árbol de Hoffman `R(H("a",'0'),R(H("b",'10'),H("c",'11')))` donde la R exterior es el nivel más alto del arbol y luego van las hojas y otras sub ramas R. Además también almacena la cadena de bits para representar la cadena codificada que en este caso es `010011010`. Se eligió representar el árbol con la información de la hoja (caracter, codificación) ya que facilita la decoficicación a la cadena original al conocer estos valores.
 
 #### **Decodificación**
-El programa permite procesar archivos `.raro` de manera eficiente, verificando la existencia del archivo y su validez antes de decodificarlo.  
+El programa permite procesar archivos `.raro` de manera eficiente, verificando la existencia del archivo y su validez al comprobar su extensión `.raro` antes de decodificarlo.
 
 #### **Análisis**
 La funcionalidad de análisis calcula:
@@ -83,8 +87,8 @@ Digamos que tenemos en el repositorio raíz un archivo `ejemplo` (sin extension)
 
 > Hola. Esta es la prueba del proyecto de Haskell de Lenguajes.
 
-1. Ejecutar `make rarisimo` para importar todos los modulos junto con sus dependencias
-2. Utilizar el comando `./rarisimo` para iniciar la ejecucion:
+1. Ejecutar `make` para unicamente compilar o `make run` para compilar y ejecutar `./rarisimo` de manera automatica, este iniciará el Cliente.
+2. Solo si se hizo la compilación con `make`, es necesario el comando `./rarisimo` para iniciar la ejecucion del Cliente:
    1. Continuamente se le solicitará al usuario que escoja una de las 4 opciones. La opcion se elige con el numero asociado (1 para Codificar, 2 para Decodificar, 3 para Analizar, 4 para Salir)
    2. Al seleccionar 1, se le pedirá la ruta de un archivo a codificar, como `ejemplo`, al dar la ruta del archivo, `./ejemplo`, se generará en el directorio raiz el archivo `ejemplo.raro` con la codificación y representación del árbol de Hoffman, y se informará el éxito de dicha acción.
    3. Luego, al seleccionar 2, se le pedirá la ruta de un archivo de extension `.raro` a decodificar. Podemos usar `./ejemplo.raro` creado en el paso anterior, entonces se creará (o sobreescribirá) el archivo `ejemplo` resultado de decodificar, y se informará del éxito de esta acción.

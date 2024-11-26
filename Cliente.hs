@@ -4,8 +4,7 @@ import Hoffman
 import qualified Data.Map as Map
 import System.IO
 import System.Directory
-import System.FilePath (replaceExtension)
-import System.FilePath (takeExtension)
+import System.FilePath (replaceExtension, takeExtension)
 
 
 -- | Función principal que maneja la interacción con el usuario.
@@ -90,7 +89,7 @@ generarCodi (Rama izq der) code acc =
 -- | Función que serializa el árbol de Hoffman con las codificaciones.
 -- Devuelve una representación en texto del árbol, incluyendo las codificaciones binarias.
 serializarArbolCodi :: Hoffman -> Map.Map Char String -> String
-serializarArbolCodi (Hoja c) codMap = "H(" ++ [c] ++ ", " ++ Map.findWithDefault "" c codMap ++ ")"
+serializarArbolCodi (Hoja c) codMap = "H(\"" ++ [c] ++ "\",\'" ++ Map.findWithDefault "" c codMap ++ "\')"
 serializarArbolCodi (Rama izq der) codMap =
     "R(" ++ serializarArbolCodi izq codMap ++ "," ++ serializarArbolCodi der codMap ++ ")"
 
@@ -146,9 +145,9 @@ construirMapaDecodificacion treeStr = Map.fromList $ parseHojas treeStr
     -- Función auxiliar que extrae las hojas del árbol serializado
     parseHojas :: String -> [(String, Char)]
     parseHojas [] = []
-    parseHojas ('H':'(':c:',':' ':rest) =
-        let (code, restTail) = span (/= ')') rest -- Extrae el código binario
-        in (code, c) : parseHojas (drop 1 restTail) -- Continúa con el resto del árbol
+    parseHojas ('H':'(':'"':c:'"':',':'\'':rest) =
+        let (code, restTail) = span (/= '\'') rest -- Extrae el código binario hasta la comilla simple
+        in (code, c) : parseHojas (drop 2 restTail) -- Saltar comilla simple y paréntesis de cierre
     parseHojas (_:rest) = parseHojas rest -- Ignorar otros caracteres
 
 
