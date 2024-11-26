@@ -98,7 +98,7 @@ Digamos que tenemos en el repositorio raíz un archivo `ejemplo` (sin extension)
 ### Imágenes de referencia:
 ![Captura de pantalla 2024-11-24 204747](https://github.com/user-attachments/assets/1e436ef8-be0a-4e43-8106-af93532ca090)
 
-![Captura de pantalla 2024-11-24 204937](https://github.com/user-attachments/assets/73949b04-624a-49a0-a068-8b801cfc4dfe)
+![image](https://github.com/user-attachments/assets/f54a92ce-b0a2-438b-b0dc-692f909bee12)
 
 ![image](https://github.com/user-attachments/assets/7c3bb1df-d851-4e0f-87e1-ab223eb2d39d)
 
